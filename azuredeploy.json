@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "metadata": {
         "title": "AS-Add-Machine-Logon-Users-to-Incident", 
-        "description": "This playbook is intended to be run from a Microsoft Sentinel Incident. It will match the Hosts from a Microsoft Sentinel Incident with Microsoft Defender Machines and add each Machine's exposure level as a comment on the Microsoft Sentinel Incident.",
+        "description": "This playbook is intended to be run from a Microsoft Sentinel incident. It will match the hosts from a Microsoft Sentinel incident with Microsoft Defender machines and add the logon users for each machine as a comment on the Microsoft Sentinel incident.",
         "prerequisites": "1. An integration account with User.Read.All permissions for defendert for endpoint. 2. An Azure Keyvault secret holding the client secret of the app registration. Support for the set up and configuration of each of these items can be found here: https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident",
         "lastUpdateTime": "2023-05-09T16:29:33Z",
         "entities": ["Host"], 
