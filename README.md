@@ -1,2 +1,126 @@
 # AS-Add-Machine-Logon-Users-to-Incident
-Add Microsoft Defender machine logon users to a Microsoft Sentinel incident comment
+
+Author: Accelerynt
+
+For any technical questions, please contact info@accelerynt.com  
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-Add-Machine-Logon-Users-to-Incident%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-Add-Machine-Logon-Users-to-Incident%2Fmain%2Fazuredeploy.json)       
+
+This playbook is intended to be run from a Microsoft Sentinel incident. It will match the hosts from a Microsoft Sentinel incident with Microsoft Defender machines and add the logon users for each machine as a comment on the Microsoft Sentinel incident.
+                                                                                                                                     
+![MachineLogonUsers_Demo_1](Images/MachineLogonUsers_Demo_1.png)
+
+#
+### Requirements
+                                                                                                                                     
+The following items are required under the template settings during deployment: 
+
+* A Microsoft Azure Active Directory [app registration](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration)
+* An [Azure key vault secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret) containing your app registration client secret
+
+# 
+### Setup
+
+#### Create an App Registration
+
+Navigate to the Microsoft Azure Active Directory app registration page: https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
+
+Click "**New registration**".
+
+![MachineLogonUsers_App_Registration_1](Images/MachineLogonUsers_App_Registration_1.png)
+
+#### Create an Azure Key Vault Secret
+
+Navigate to the Azure key vaults page: https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.KeyVault%2Fvaults
+
+Navigate to an existing key vault or create a new one. From the key vault overview page, click the "**Secrets**" menu option, found under the "**Settings**" section. Click "**Generate/Import**".
+
+![MachineLogonUsers_Key_Vault_1](Images/MachineLogonUsers_Key_Vault_1.png)
+
+Choose a name for the secret, such as "**AS-Add-Machine-Logon-Users-to-Incident-AR-Client-Secret**", and enter the client secret copied in the [previous section](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration). All other settings can be left as is. Click "**Create**". 
+
+![MachineLogonUsers_Key_Vault_2](Images/MachineLogonUsers_Key_Vault_2.png)
+
+Once your secret has been added to the vault, navigate to the "**Access policies**" menu option, also found under the "**Settings**" section on the key vault page menu. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#granting-access-to-azure-key-vault).
+
+![MachineLogonUsers_Key_Vault_3](Images/MachineLogonUsers_Key_Vault_3.png)
+
+#
+### Deployment
+
+To configure and deploy this playbook:
+ 
+Open your browser and ensure you are logged into your Microsoft Sentinel workspace. In a separate tab, open the link to our playbook on the Accelerynt Security GitHub repository:
+
+https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-Add-Machine-Logon-Users-to-Incident%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-Add-Machine-Logon-Users-to-Incident%2Fmain%2Fazuredeploy.json)                                             
+
+Click the "**Deploy to Azure**" button at the bottom and it will bring you to the custom deployment template.
+
+In the **Project Details** section:
+
+* Select the "**Subscription**" and "**Resource Group**" from the dropdown boxes you would like the playbook deployed to.  
+
+In the **Instance Details** section:
+
+* **Playbook Name**: This can be left as "**AS-Add-Machine-Logon-Users-to-Incident**" or you may change it.
+
+* **Client ID**: Enter the Application (client) ID of your app registration referenced in [Create an App Registration](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration).
+
+* **Key Vault Name**: Enter the name of the key vault referenced in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret).
+
+* **Secret Name**: Enter the name of the key vault Secret created in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret).
+
+Towards the bottom, click on "**Review + create**". 
+
+![MachineLogonUsers_Deploy_1](Images/MachineLogonUsers_Deploy_1.png)
+
+Once the resources have validated, click on "**Create**".
+
+![MachineLogonUsers_Deploy_2](Images/MachineLogonUsers_Deploy_2.png)
+
+The resources should take around a minute to deploy. Once the deployment is complete, you can expand the "**Deployment details**" section to view them.
+Click the one corresponding to the Logic App.
+
+![MachineLogonUsers_Deploy_3](Images/MachineLogonUsers_Deploy_3.png)
+
+#
+### Running the Playbook 
+
+To run this playbook from a Microsoft Sentinel incident, navigate to Microsoft Sentinel:
+
+https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.securityinsightsarg%2Fsentinel
+
+Select a workspace and then click the "**Incidents**" menu option located under "**Threat management**". Select an incident with compromised host entities.
+
+Click on the "**Action**" list button on the bottom right of the screen and select "**Run playbook**".
+
+![MachineLogonUsers_Run_1](Images/MachineLogonUsers_Run_1.png)
+
+From the "**Run playbook on incident**" view, type "**AS-Add-Machine-Logon-Users-to-Incident**" into the search bar, then click run.
+
+![MachineLogonUsers_Run_2](Images/MachineLogonUsers_Run_2.png)
+
+#
+### Granting Access to Azure Key Vault
+
+Before the Logic App can run successfully, the key vault connection created during deployment must be granted access to the key vault storing your app registration client secret.
+
+From the key vault "**Access policies**" page, click "**Create**".
+
+![MachineLogonUsers_Key_Vault_Access_1](Images/MachineLogonUsers_Key_Vault_Access_1.png)
+
+Select the "**Get**" checkbox under "**Secret permissions**", then click "**Next**".
+
+![MachineLogonUsers_Key_Vault_Access_2](Images/MachineLogonUsers_Key_Vault_Access_2.png)
+
+Paste "**AS-Add-Machine-Logon-Users-to-Incident**" into the principal search box and click the option that appears. Click "**Next**" towards the bottom of the page.
+
+![MachineLogonUsers_Key_Vault_Access_3](Images/MachineLogonUsers_Key_Vault_Access_3.png)
+
+Navigate to the "**Review + create**" section and click "**Create**".
+
+![MachineLogonUsers_Key_Vault_Access_4](Images/MachineLogonUsers_Key_Vault_Access_4.png)
