@@ -4,7 +4,7 @@
     "metadata": {
         "title": "AS-Add-Machine-Logon-Users-to-Incident", 
         "description": "This playbook is intended to be run from a Microsoft Sentinel incident. It will match the hosts from a Microsoft Sentinel incident with Microsoft Defender machines and add the logon users for each machine as a comment on the Microsoft Sentinel incident.",
-        "prerequisites": "1. An integration account with User.Read.All permissions for defendert for endpoint. 2. An Azure Keyvault secret holding the client secret of the app registration. Support for the set up and configuration of each of these items can be found here: https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident",
+        "prerequisites": "1. An integration account with User.Read.All permissions for defender for endpoint. 2. An Azure Key Vault secret holding the client secret of the app registration. Support for the set up and configuration of each of these items can be found here: https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident",
         "lastUpdateTime": "2023-05-09T16:29:33Z",
         "entities": ["Host"], 
         "tags": ["Microsoft Sentinel", "Incident", "Microsoft Defender"], 
@@ -20,7 +20,7 @@
             "defaultValue": "AS-Add-Machine-Logon-Users-to-Incident",
             "type": "string"
         },
-        "ApplicationID": {
+        "ClientID": {
             "type": "string",
             "metadata" : {
                 "description" : "Enter the Application (client) ID of your App Registration"
@@ -119,7 +119,7 @@
                         }
                     },
                     "actions": {
-                        "Get_Secret_API_Token": {
+                        "Get_Client_Secret": {
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
@@ -297,7 +297,7 @@
                                     "runAfter": {},
                                     "type": "Http",
                                     "inputs": {
-                                        "body": "[concat('grant_type=client_credentials&client_id=', parameters('ApplicationID'),'&client_secret=@{body(''Get_Secret_API_Token'')?[''value'']}&scope=https://securitycenter.onmicrosoft.com/windowsatpservice/.default')]",
+                                        "body": "[concat('grant_type=client_credentials&client_id=', parameters('ClientID'),'&client_secret=@{body(''Get_Client_Secret'')?[''value'']}&scope=https://securitycenter.onmicrosoft.com/windowsatpservice/.default')]",
                                         "headers": {
                                             "Content-Type": "application/x-www-form-urlencoded",
                                             "Host": "login.microsoftonline.com"
@@ -354,7 +354,7 @@
                         },
                         "Entities_-_Get_Hosts": {
                             "runAfter": {
-                                "Get_Secret_API_Token": [
+                                "Get_Client_Secret": [
                                     "Succeeded"
                                 ]
                             },
