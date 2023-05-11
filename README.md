@@ -16,7 +16,7 @@ This playbook is intended to be run from a Microsoft Sentinel incident. It will 
                                                                                                                                      
 The following items are required under the template settings during deployment: 
 
-* A Microsoft Azure Active Directory [app registration](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration)
+* A Microsoft Azure Active Directory [app registration](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration) with admin consent granted for "**Users.Read.All**" in the "**WindowsDefenderATP**" API
 * An [Azure key vault secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret) containing your app registration client secret
 
 # 
@@ -29,6 +29,43 @@ Navigate to the Microsoft Azure Active Directory app registration page: https://
 Click "**New registration**".
 
 ![MachineLogonUsers_App_Registration_1](Images/MachineLogonUsers_App_Registration_1.png)
+
+Enter "**AS-Add-Machine-Logon-Users-to-Incident**" for the name, all else can be left as is. Click "**Register**"
+
+![MachineLogonUsers_App_Registration_2](Images/MachineLogonUsers_App_Registration_2.png)
+
+Once the app registration is created, you will be redirected to the "**Overview**" page. Under the "**Essentials**" section, take note of the "**Application (client) ID**", as this will be needed for deployment.
+
+![MachineLogonUsers_App_Registration_3](Images/MachineLogonUsers_App_Registration_3.png)
+
+Next, you will need to add permissions for the app registration to call the [Microsoft Defender logonusers endpoint](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/get-machine-log-on-users?view=o365-worldwide). From the left menu blade, click "**API permissions**" under the "**Manage**" section. Then, click "**Add a permission**".
+
+![MachineLogonUsers_App_Registration_4](Images/MachineLogonUsers_App_Registration_4.png)
+
+From the "**Select an API**" pane, click the "**APIs my organization uses**" tab, then paste "**WindowsDefenderATP**" in the search bar. Click the option matching the search.
+
+![MachineLogonUsers_App_Registration_5](Images/MachineLogonUsers_App_Registration_5.png)
+
+Click "**Application permissions**", then type "**User.Read.All**" into the search bar and select the result. Click "**Add permissions**".
+
+![MachineLogonUsers_App_Registration_6](Images/MachineLogonUsers_App_Registration_6.png)
+
+Admin consent will be needed before your app registration can use the assigned permission. Click "**Grant admin consent for (name)**".
+
+![MachineLogonUsers_App_Registration_7](Images/MachineLogonUsers_App_Registration_7.png)
+
+Lastly, a client secret will need to be generated for the app registration. From the left menu blade, click "**Certificates & secrets**" under the "**Manage**" section. Then, click "**New client secret**".
+
+![MachineLogonUsers_App_Registration_8](Images/MachineLogonUsers_App_Registration_8.png)
+
+Enter a description and select the desired expiration date, then click "**Add**".
+
+![MachineLogonUsers_App_Registration_9](Images/MachineLogonUsers_App_Registration_9.png)
+
+Copy the value of the secret that is generated, as this will be needed for [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret).
+
+![MachineLogonUsers_App_Registration_10](Images/MachineLogonUsers_App_Registration_10.png)
+
 
 #### Create an Azure Key Vault Secret
 
