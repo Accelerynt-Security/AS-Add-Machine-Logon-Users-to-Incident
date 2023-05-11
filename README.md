@@ -79,7 +79,7 @@ Choose a name for the secret, such as "**AS-Add-Machine-Logon-Users-to-Incident-
 
 ![MachineLogonUsers_Key_Vault_2](Images/MachineLogonUsers_Key_Vault_2.png)
 
-Once your secret has been added to the vault, navigate to the "**Access policies**" menu option, also found under the "**Settings**" section on the key vault page menu. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#granting-access-to-azure-key-vault).
+Once your secret has been added to the vault, navigate to the "**Access policies**" menu option. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#granting-access-to-azure-key-vault).
 
 ![MachineLogonUsers_Key_Vault_3](Images/MachineLogonUsers_Key_Vault_3.png)
 
