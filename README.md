@@ -11,6 +11,7 @@ This playbook is intended to be run from a Microsoft Sentinel incident. It will 
                                                                                                                                      
 ![MachineLogonUsers_Demo_1](Images/MachineLogonUsers_Demo_1.png)
 
+
 #
 ### Requirements
                                                                                                                                      
@@ -18,6 +19,7 @@ The following items are required under the template settings during deployment:
 
 * A Microsoft Azure Active Directory [app registration](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-app-registration) with admin consent granted for "**Users.Read.All**" in the "**WindowsDefenderATP**" API
 * An [Azure key vault secret](https://github.com/Accelerynt-Security/AS-Add-Machine-Logon-Users-to-Incident#create-an-azure-key-vault-secret) containing your app registration client secret
+
 
 # 
 ### Setup
@@ -83,6 +85,7 @@ Once your secret has been added to the vault, navigate to the "**Access policies
 
 ![MachineLogonUsers_Key_Vault_3](Images/MachineLogonUsers_Key_Vault_3.png)
 
+
 #
 ### Deployment
 
@@ -124,22 +127,6 @@ Click the one corresponding to the Logic App.
 
 ![MachineLogonUsers_Deploy_3](Images/MachineLogonUsers_Deploy_3.png)
 
-#
-### Running the Playbook 
-
-To run this playbook from a Microsoft Sentinel incident, navigate to Microsoft Sentinel:
-
-https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.securityinsightsarg%2Fsentinel
-
-Select a workspace and then click the "**Incidents**" menu option located under "**Threat management**". Select an incident with compromised host entities.
-
-Click on the "**Action**" list button on the bottom right of the screen and select "**Run playbook**".
-
-![MachineLogonUsers_Run_1](Images/MachineLogonUsers_Run_1.png)
-
-From the "**Run playbook on incident**" view, type "**AS-Add-Machine-Logon-Users-to-Incident**" into the search bar, then click run.
-
-![MachineLogonUsers_Run_2](Images/MachineLogonUsers_Run_2.png)
 
 #
 ### Granting Access to Azure Key Vault
@@ -161,3 +148,21 @@ Paste "**AS-Add-Machine-Logon-Users-to-Incident**" into the principal search box
 Navigate to the "**Review + create**" section and click "**Create**".
 
 ![MachineLogonUsers_Key_Vault_Access_4](Images/MachineLogonUsers_Key_Vault_Access_4.png)
+
+
+#
+### Running the Playbook 
+
+To run this playbook from a Microsoft Sentinel incident, navigate to Microsoft Sentinel:
+
+https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.securityinsightsarg%2Fsentinel
+
+Select a workspace and then click the "**Incidents**" menu option located under "**Threat management**". Select an incident with compromised host entities.
+
+Click on the "**Action**" list button on the bottom right of the screen and select "**Run playbook**".
+
+![MachineLogonUsers_Run_1](Images/MachineLogonUsers_Run_1.png)
+
+From the "**Run playbook on incident**" view, type "**AS-Add-Machine-Logon-Users-to-Incident**" into the search bar, then click run.
+
+![MachineLogonUsers_Run_2](Images/MachineLogonUsers_Run_2.png)
