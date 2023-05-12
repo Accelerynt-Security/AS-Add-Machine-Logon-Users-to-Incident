@@ -143,7 +143,7 @@ Select the "**Microsoft Sentinel Contributor**" role, then click "**Next**".
 
 ![MachineLogonUsers_Add_Contributor_Role_2](Images/MachineLogonUsers_Add_Contributor_Role_2.png)
 
-Select the "**Managed identity**" option, then under the subscription the logic app is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Get-HostExposureLevel-From-MDE**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
+Select the "**Managed identity**" option, then click "**Select Members**". Under the subscription the logic app is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Add-Machine-Logon-Users-to-Incident**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
 
 ![MachineLogonUsers_Add_Contributor_Role_3](Images/MachineLogonUsers_Add_Contributor_Role_3.png)
 
