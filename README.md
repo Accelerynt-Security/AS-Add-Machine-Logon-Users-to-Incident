@@ -129,6 +129,45 @@ Click the one corresponding to the Logic App.
 
 
 #
+### Microsoft Sentinel Contributor Role
+
+After deployment, you will need to give the system assigned managed identity the "**Microsoft Sentinel Contributor**" role. This will enable it to add comments to incidents. Navigate to the Log Analytics Workspaces page and select the same workspace the playbook is located in:
+
+https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.OperationalInsights%2Fworkspaces
+
+Select the "**Access control (IAM)**" option from the menu blade, then click "**Add role assignment**".
+
+![MachineLogonUsers_Add_Contributor_Role_1](Images/MachineLogonUsers_Add_Contributor_Role_1.png)
+
+Select the "**Microsoft Sentinel Contributor**" role, then click "**Next**".
+
+![MachineLogonUsers_Add_Contributor_Role_2](Images/MachineLogonUsers_Add_Contributor_Role_2.png)
+
+Select the "**Managed identity**" option, then under the subscription the logic app is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Get-HostExposureLevel-From-MDE**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
+
+![MachineLogonUsers_Add_Contributor_Role_3](Images/MachineLogonUsers_Add_Contributor_Role_3.png)
+
+Continue on to the "**Review + assign**" tab and click "**Review + assign**".
+
+![MachineLogonUsers_Add_Contributor_Role_4](Images/MachineLogonUsers_Add_Contributor_Role_4.png)
+
+
+**Alternatively**, if you wish to do this through PowerShell, run the following commands, replacing the managed identity object id and resource group name. You can find the managed identity object id on the Identity blade under Settings for the Logic App.
+
+![MachineLogonUsers_Add_Contributor_Role_5](Images/MachineLogonUsers_Add_Contributor_Role_5.png)
+
+You will not need to run the Install-Module if this has been done before. More documentation on this module can be found here:
+
+https://learn.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-9.3.0
+
+```powershell
+Install-Module -Name Az
+Connect-AzAccount
+New-AzRoleAssignment -ObjectId <logic app managed identity object id> -RoleDefinitionName "Microsoft Sentinel Contributor" -ResourceGroupName "<logic app resource group name>"
+```
+
+
+#
 ### Granting Access to Azure Key Vault
 
 Before the Logic App can run successfully, the key vault connection created during deployment must be granted access to the key vault storing your app registration client secret.
